@@ -1,0 +1,4 @@
+repository "PC_Collector/PC_Collector@4674089543265@cloud"
+  path "/"
+    br "/main"
+    co "/main"
