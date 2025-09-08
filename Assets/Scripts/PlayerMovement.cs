@@ -6,23 +6,29 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float jumpSpeed = 5f;
     [SerializeField] float climbSpeed = 5f;
+    [SerializeField] float ladderJumpGrace = 0.20f;
 
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
     Animator myAnimator;
-    CapsuleCollider2D myCapsuleCollider;
+    CapsuleCollider2D myBodyCollider;
+    BoxCollider2D myFeetCollider;
     float gravitySacaleAtStart;
+    float ladderDetachTimer = 0f;
 
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
-        myCapsuleCollider = GetComponent<CapsuleCollider2D>();
+        myBodyCollider = GetComponent<CapsuleCollider2D>();
+        myFeetCollider = GetComponent<BoxCollider2D>();
         gravitySacaleAtStart = myRigidbody.gravityScale;
     }
 
     void Update()
     {
+        if (ladderDetachTimer > 0f) { ladderDetachTimer -= Time.deltaTime; }
+
         Run();
         FlipSprite();
         ClimbLadder();
@@ -36,14 +42,25 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        if (!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) { return; }
-        if (value.isPressed)
-        {
-            myRigidbody.linearVelocity += new Vector2(0f, jumpSpeed);
-        }
+        if (!value.isPressed) return;
+
+        int groundOrLadder = LayerMask.GetMask("Ground", "Climbing");
+        bool touchingSomething = myFeetCollider.IsTouchingLayers(groundOrLadder);
+        bool onLadder = myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Climbing"));
+
+        if (!touchingSomething) return;
+
+        myRigidbody.gravityScale = gravitySacaleAtStart;
+        myAnimator.SetBool("isClimbing", false);
+
+        Vector2 v = myRigidbody.linearVelocity;
+        v.y = jumpSpeed;
+        myRigidbody.linearVelocity = v;
+
+        if (onLadder) ladderDetachTimer = ladderJumpGrace;
+
+
     }
-
-
 
     void Run()
     {
@@ -66,17 +83,38 @@ public class PlayerMovement : MonoBehaviour
 
     void ClimbLadder()
     {
-        if (!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+        // Se acabamos de pular da escada, não aplicar lógica de escalar
+        if (ladderDetachTimer > 0f)
+            return;
+
+        bool touchingLadder = myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Climbing"));
+
+        if (!touchingLadder)
         {
             myRigidbody.gravityScale = gravitySacaleAtStart;
             myAnimator.SetBool("isClimbing", false);
             return;
         }
+
+        // Ativar modo escalar apenas quando houver input vertical
         Vector2 climbVelocity = new Vector2(moveInput.x * runSpeed, moveInput.y * climbSpeed);
         myRigidbody.linearVelocity = climbVelocity;
         myRigidbody.gravityScale = 0f;
 
-        bool playerHasVerticalSpeed = Mathf.Abs(myRigidbody.linearVelocityY) > Mathf.Epsilon;
-        myAnimator.SetBool("isClimbing", playerHasVerticalSpeed);
+        // Só sobrescreve o Y quando de fato estiver escalando (input vertical)
+        if (Mathf.Abs(moveInput.y) > Mathf.Epsilon)
+        {
+            climbVelocity.y = moveInput.y * climbSpeed;
+            myAnimator.SetBool("isClimbing", true);
+        }
+        else
+        {
+            // Sem input vertical: preserve o Y atual para não matar o pulo
+            // e considere que não está "escalando ativamente"
+            myAnimator.SetBool("isClimbing", false);
+        }
+
+        myRigidbody.linearVelocity = climbVelocity;
     }
+
 }
