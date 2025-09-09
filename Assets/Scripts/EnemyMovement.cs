@@ -8,9 +8,7 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        int enemy = LayerMask.NameToLayer("Enemy");
-        int climbing = LayerMask.NameToLayer("Climbing");
-        Physics2D.IgnoreLayerCollision(enemy, climbing, true);
+        
     }
 
     void Update()
