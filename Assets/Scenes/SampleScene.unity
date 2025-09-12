@@ -337,7 +337,7 @@ Transform:
   m_GameObject: {fileID: 465172239}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.0695095, y: -6.34239, z: -10}
+  m_LocalPosition: {x: -10.44, y: 0.52, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -408,7 +408,7 @@ MonoBehaviour:
   Lens:
     FieldOfView: 34
     OrthographicSize: 6
-    NearClipPlane: 0.3
+    NearClipPlane: 0
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -528,11 +528,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -556,12 +556,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000022312244, y: -5.542092e-11, z: -1.2365651e-18, w: 1}
-  m_LocalPosition: {x: -10.440013, y: 1.59875, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.4400015, y: 0.59875, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 889986414}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519420033
 MonoBehaviour:
@@ -1335,6 +1335,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1411873106}
+  - {fileID: 519420032}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1173893622
@@ -1666,8 +1667,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
   TrackerSettings:
-    BindingMode: 3
-    PositionDamping: {x: 1, y: 5, z: 1}
+    BindingMode: 0
+    PositionDamping: {x: 1, y: 2, z: 1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
@@ -1697,8 +1698,8 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 5
-    NearClipPlane: 0.3
+    OrthographicSize: 4
+    NearClipPlane: 0.01
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -1724,7 +1725,7 @@ Transform:
   m_GameObject: {fileID: 1335608089}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.0695095, y: -6.34239, z: -10}
+  m_LocalPosition: {x: -10.44, y: 0.52, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1778,7 +1779,7 @@ Transform:
   m_GameObject: {fileID: 1390869466}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.0695095, y: -6.34239, z: -10}
+  m_LocalPosition: {x: -10.44, y: 0.52, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1848,8 +1849,8 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 4
-    NearClipPlane: 0.3
+    OrthographicSize: 3
+    NearClipPlane: 0
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -1891,8 +1892,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411873105}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.37049, y: 6.86239, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1923,7 +1924,7 @@ MonoBehaviour:
   DefaultTarget:
     Enabled: 0
     Target:
-      TrackingTarget: {fileID: 0}
+      TrackingTarget: {fileID: 1571554050}
       LookAtTarget: {fileID: 0}
       CustomLookAtTarget: 0
   DefaultBlend:
@@ -1957,6 +1958,8 @@ MonoBehaviour:
   - Hash: 256545655
     HashOfParent: 756556552
   - Hash: -725336713
+    HashOfParent: 756556552
+  - Hash: -1546996312
     HashOfParent: 756556552
   m_LegacyLookAt: {fileID: 0}
   m_LegacyFollow: {fileID: 0}
@@ -18053,18 +18056,17 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -2.1847162, y: 18.563648}
-      - {x: -22.36827, y: 18.369919}
-      - {x: -22.337658, y: -2.4012547}
-      - {x: 19.524403, y: -2.40125}
-      - {x: 19.617256, y: 18.494417}
+    - - {x: -2.1409335, y: 18.826344}
+      - {x: -22.762316, y: 18.763964}
+      - {x: -22.741404, y: -2.4012547}
+      - {x: 19.7871, y: -2.40125}
+      - {x: 19.748604, y: 18.757113}
   m_UseDelaunayMesh: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 619394802}
-  - {fileID: 519420032}
   - {fileID: 889986414}
   - {fileID: 1562949789}
   - {fileID: 1173893622}
