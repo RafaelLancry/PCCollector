@@ -1,13 +1,25 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float runSpeed = 10f;
-    [SerializeField] float jumpSpeed = 5f;
+    [SerializeField] float jumpSpeed = 20f;
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] float ladderJumpGrace = 0.20f;
-    [SerializeField] Vector2 deathKick = new Vector2(10f, 10f);
+    [SerializeField] Vector2 deathKick = new Vector2(0f, 10f);
+
+    // ---- Config do CapsuleCollider2D----
+    [Header("Collider - Vivo")]
+    [SerializeField] Vector2 aliveColliderOffset = new Vector2(-0.002412796f, -0.006480336f);
+    [SerializeField] Vector2 aliveColliderSize = new Vector2(0.503624f, 0.9154408f);
+    [SerializeField] CapsuleDirection2D aliveDirection = CapsuleDirection2D.Vertical;
+
+    [Header("Collider - Morto")]
+    [SerializeField] Vector2 deadColliderOffset = new Vector2(-0.002412796f, -0.078f);
+    [SerializeField] Vector2 deadColliderSize = new Vector2(0.67f, 0.51f);
+    [SerializeField] CapsuleDirection2D deadDirection = CapsuleDirection2D.Horizontal;
 
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
@@ -26,6 +38,13 @@ public class PlayerMovement : MonoBehaviour
         myBodyCollider = GetComponent<CapsuleCollider2D>();
         myFeetCollider = GetComponent<BoxCollider2D>();
         gravitySacaleAtStart = myRigidbody.gravityScale;
+
+        if (myBodyCollider)
+        {
+            myBodyCollider.direction = aliveDirection;
+            myBodyCollider.offset = aliveColliderOffset;
+            myBodyCollider.size = aliveColliderSize;
+        }
     }
 
     void Update()
@@ -127,14 +146,56 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
+        // se já morreu, evita repetir lógica
+        if (!isAlive) return;
+
         if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
         {
             isAlive = false;
+
+            // animação e impulso
             myAnimator.SetTrigger("Dying");
             myRigidbody.linearVelocity = deathKick;
-            myRigidbody.bodyType = RigidbodyType2D.Static;
 
+            // opcional: manter Dynamic por 1–2 frames se você quiser que o deathKick "empurre" antes de travar.
+            // aqui seguimos o padrão: ficar Static
+            myRigidbody.bodyType = RigidbodyType2D.Dynamic;
+
+            // desabilita pés para não interferir com triggers de chão
             myFeetCollider.enabled = false;
+
+            // aplicamos a configuração do collider do sprite morto <<<
+            if (myBodyCollider)
+            {
+                myBodyCollider.direction = deadDirection;           // Horizontal
+                myBodyCollider.offset = deadColliderOffset;      // (-0.002412806, -0.07815323)
+                myBodyCollider.size = deadColliderSize;        // (0.9154412, 0.5088465)
+            }
+
+            // Chama o método para mudar para Static após 2 segundos
+            StartCoroutine(SetRigidBodyStatic(1f));
         }
     }
+
+    // Método auxiliar que espera um tempo antes de travar o Rigidbody
+    private IEnumerator SetRigidBodyStatic(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (myRigidbody != null)
+        {
+            myRigidbody.bodyType = RigidbodyType2D.Static;
+        }
+    }
+    
+    // Comentado o código para Respawn
+    //  public void RestoreAliveCollider()
+    // {
+    //     if (myBodyCollider)
+    //     {
+    //         myBodyCollider.direction = aliveDirection;   // Vertical
+    //         myBodyCollider.offset    = aliveColliderOffset;
+    //         myBodyCollider.size      = aliveColliderSize;
+    //         myBodyCollider.isTrigger = false;
+    //     }
+    // }
 }
