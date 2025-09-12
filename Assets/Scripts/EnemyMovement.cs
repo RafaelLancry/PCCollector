@@ -22,6 +22,15 @@ public class EnemyMovement : MonoBehaviour
         FlipEnemyFacing();
     }
 
+    void OnCollisionExit2D (Collision2D collision)
+    {
+        if (myRigidbody.IsTouchingLayers(LayerMask.GetMask("Player")))
+        {
+            moveSpeed = -moveSpeed;
+            FlipEnemyFacing();
+        }
+    }
+
     void FlipEnemyFacing()
     {
         transform.localScale = new Vector2(-(Mathf.Sign(myRigidbody.linearVelocityX)), 1f);
