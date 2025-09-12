@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (!isAlive) { return; }
-  
+
         if (ladderDetachTimer > 0f) { ladderDetachTimer -= Time.deltaTime; }
 
         Run();
@@ -125,13 +125,16 @@ public class PlayerMovement : MonoBehaviour
         myRigidbody.linearVelocity = climbVelocity;
     }
 
-    void Die ()
+    void Die()
     {
         if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
         {
             isAlive = false;
             myAnimator.SetTrigger("Dying");
             myRigidbody.linearVelocity = deathKick;
+            myRigidbody.bodyType = RigidbodyType2D.Static;
+
+            myFeetCollider.enabled = false;
         }
     }
 }
