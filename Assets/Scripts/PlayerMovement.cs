@@ -9,10 +9,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] float ladderJumpGrace = 0.20f;
     [SerializeField] Vector2 deathKick = new Vector2(0f, 10f);
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform gun;
 
     // ---- Config do CapsuleCollider2D----
     [Header("Collider - Vivo")]
-    [SerializeField] Vector2 aliveColliderOffset = new Vector2(-0.002412796f, -0.006480336f);
+    [SerializeField] Vector2 aliveColliderOffset = new Vector2(-0.002412796f, -0.003392637f);
     [SerializeField] Vector2 aliveColliderSize = new Vector2(0.503624f, 0.9154408f);
     [SerializeField] CapsuleDirection2D aliveDirection = CapsuleDirection2D.Vertical;
 
@@ -57,6 +59,12 @@ public class PlayerMovement : MonoBehaviour
         FlipSprite();
         ClimbLadder();
         Die();
+    }
+
+    void OnAttack(InputValue value)
+    {
+        if (!isAlive) { return; }
+        Instantiate(bullet, gun.position, transform.rotation);
     }
 
     void OnMove(InputValue value)
@@ -149,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
         // se já morreu, evita repetir lógica
         if (!isAlive) return;
 
-        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy")))
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Hazards")))
         {
             isAlive = false;
 
