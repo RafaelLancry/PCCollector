@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1078955603358363579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6232726773903341396}
+  m_Layer: 8
+  m_Name: Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6232726773903341396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078955603358363579}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.316, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5640461570667703277}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2814544794689455715
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,7 +66,8 @@ Transform:
   m_LocalPosition: {x: -5.33, y: -0.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6232726773903341396}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6745597846267897998
@@ -105,7 +137,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1098417803
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 1857188551261513057, guid: 955e27852b991e346813d3a3299c3c0d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -152,8 +184,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.005270958, y: -0.006480336}
-  m_Size: {x: 0.6198664, y: 0.9154408}
+  m_Offset: {x: -0.002412796, y: -0.0033926368}
+  m_Size: {x: 0.50362396, y: 0.9092654}
   m_Direction: 0
 --- !u!50 &6808488628386836099
 Rigidbody2D:
@@ -224,11 +256,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f15b0fc8c5b566840a3652ebecf9c832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  runSpeed: 7
+  runSpeed: 10
   jumpSpeed: 20
   climbSpeed: 5
   ladderJumpGrace: 0.2
-  deathKick: {x: 0, y: 12}
+  deathKick: {x: 0, y: 10}
+  bullet: {fileID: 1077135820231917561, guid: f4fbc47ac7491db4ca4a098174b59921, type: 3}
+  gun: {fileID: 6232726773903341396}
+  aliveColliderOffset: {x: -0.002412796, y: -0.006480336}
+  aliveColliderSize: {x: 0.503624, y: 0.9154408}
+  aliveDirection: 0
+  deadColliderOffset: {x: -0.007212162, y: -0.4149407}
+  deadColliderSize: {x: 0.4274683, y: 0.08930719}
+  deadDirection: 1
 --- !u!61 &2667269396467097748
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -263,7 +303,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.021788597, y: -0.397799}
+  m_Offset: {x: -0.007212162, y: -0.41494066}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -273,5 +313,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.46563148, y: 0.10769099}
+  m_Size: {x: 0.4274683, y: 0.08930719}
   m_EdgeRadius: 0
