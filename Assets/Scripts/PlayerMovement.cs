@@ -175,13 +175,14 @@ public class PlayerMovement : MonoBehaviour
             // aplicamos a configuração do collider do sprite morto <<<
             if (myBodyCollider)
             {
-                myBodyCollider.direction = deadDirection;           // Horizontal
-                myBodyCollider.offset = deadColliderOffset;      // (-0.002412806, -0.07815323)
-                myBodyCollider.size = deadColliderSize;        // (0.9154412, 0.5088465)
+                myBodyCollider.direction = deadDirection;
+                myBodyCollider.offset = deadColliderOffset;
+                myBodyCollider.size = deadColliderSize;
             }
 
             // Chama o método para mudar para Static após 2 segundos
             StartCoroutine(SetRigidBodyStatic(1f));
+            FindAnyObjectByType<GameSession>().ProcessPlayerDeath();
         }
     }
 
