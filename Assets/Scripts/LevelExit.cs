@@ -8,7 +8,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField] float levelLoadDelay = 1f;
     void OnTriggerEnter2D(Collider2D other)
     {
-        StartCoroutine(LoadNextLevel());
+        if (other.tag == "Player")
+        {
+            StartCoroutine(LoadNextLevel());
+        }
     }
 
     IEnumerator LoadNextLevel()
@@ -21,6 +24,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         {
             nextSceneIndex = 0;
         }
+        FindAnyObjectByType<ScenePersist>().ResetScenePersist();
         SceneManager.LoadScene(nextSceneIndex);
     }
 }
